@@ -320,7 +320,7 @@ export default class SignaturePad extends React.Component {
     return (
       <div id="signature-pad" className="m-signature-pad">
         <div className="m-signature-pad--body">
-          <canvas ref="cv"></canvas>
+          <canvas ref="cv" height={this.props.height} width={this.props.width}></canvas>
         </div>
         { this.props.clearButton &&
           <div className="m-signature-pad--footer">
