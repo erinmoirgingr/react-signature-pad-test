@@ -64,6 +64,8 @@ export default class SignaturePad extends React.Component {
       self._ctx.drawImage(image, 0, 0, width, height);
     };
     this._isEmpty = false;
+    this.onChange();
+
   }
 
   isEmpty() {
@@ -82,6 +84,7 @@ export default class SignaturePad extends React.Component {
 
     ctx.scale(ratio, ratio);
     this._isEmpty = true;
+    this.onChange();
   }
 
   _reset() {
@@ -89,6 +92,7 @@ export default class SignaturePad extends React.Component {
     this._lastVelocity = 0;
     this._lastWidth = (this.minWidth + this.maxWidth) / 2;
     this._isEmpty = true;
+    this.onChange();
     this._ctx.fillStyle = this.penColor;
   };
 
@@ -122,6 +126,14 @@ export default class SignaturePad extends React.Component {
     window.removeEventListener("resize", this._resizeCanvas);
   }
 
+  onChange() {
+    if(!this._isEmpty) {
+      this.props.onChange(this.toDataURL());
+    }
+
+    return this.props.onChange('')
+  }
+
   _handleMouseDown(event) {
     if (event.which === 1) {
       this._mouseButtonDown = true;
@@ -140,6 +152,7 @@ export default class SignaturePad extends React.Component {
           this._mouseButtonDown = false;
           this._strokeEnd(event);
           this._isEmpty = false;
+          this.onChange();
       }
   };
 
@@ -278,6 +291,7 @@ export default class SignaturePad extends React.Component {
     ctx.moveTo(x, y);
     ctx.arc(x, y, size, 0, 2 * Math.PI, false);
     this._isEmpty = false;
+    this.onChange();
   };
 
   _drawCurve(curve, startWidth, endWidth) {
