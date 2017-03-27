@@ -151,8 +151,6 @@ export default class SignaturePad extends React.Component {
       if (event.which === 1 && this._mouseButtonDown) {
           this._mouseButtonDown = false;
           this._strokeEnd(event);
-          this._isEmpty = false;
-          this.onChange();
       }
   };
 
